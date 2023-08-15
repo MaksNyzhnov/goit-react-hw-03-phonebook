@@ -54,6 +54,18 @@ this.setState({filter: event.currentTarget.value})
       return contact.name.toLowerCase().includes(normalizedFilter);
     });
   };
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts')
+    if (contacts) {
+      this.setState({contacts: JSON.parse(contacts)})
+    }
+}
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+     localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+   }
+}
+
 
   render() {
     const filteredContacts = this.getFilteredContacts();
